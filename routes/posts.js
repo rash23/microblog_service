@@ -4,7 +4,7 @@ const { postValidator } = require('../middleware/post_validator');
 
 const PostController = require('../controllers/posts');
 
-const postService = require('../services/posts_sqlite');
+const postService = require('../services/posts');
 
 const postController = new PostController(postService);
 

@@ -1,0 +1,39 @@
+extends layout
+
+block headerButtons
+  a(href="/auth/logout") Logout
+
+block content
+  h3 Use Admin powers wisely!
+  div#root
+    div All Movies
+    table.mainTable
+      thead
+        tr
+          each item in ['ID', 'Movie', 'Author', 'Actions']
+            th(class=item.toLowerCase())= item
+      tbody#videosTable
+        each item in locals.videos
+          tr
+            td= item.id
+            td
+              a(href=`/videos/${item.id}`)= item.title
+            td= item.author.name
+            td
+              input(type="button", value="Manage")
+              input(type="button", value="Delete" data-id=item.id data-action='del')
+    .padded
+      div All Authors
+      table.mainTable#authors
+        thead
+          tr
+            each item in ['ID', 'Name', 'Actions']
+              th(class=item.toLowerCase())= item
+        tbody#authorsTable
+          each item in locals.authors
+            tr
+              td= item.id
+              td= item.name
+              td
+                input(type="button", value="Delete")
+

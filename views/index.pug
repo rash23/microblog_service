@@ -1,0 +1,27 @@
+extends layout
+
+block headerButtons
+  if locals.authorId > 0
+    a(href=`/author_home/${locals.authorId}`) My Posts
+    a(href="/auth/logout") Logout
+  else
+    a(href="/auth/login") Login
+    a(href="/auth/register") Register
+
+block content
+  h3 These posts are available to watch now
+  div.padded To be able to add new posts and manage your collection - please log in or register as Author
+
+  div#root
+    table.mainTable
+      thead
+        tr
+          each item in ['ID', 'Movie', 'Description']
+            th(class=item.toLowerCase())= item
+      tbody
+        each item in locals.posts
+          tr
+            td= item.id
+            td
+              a(href=`/posts/${item.id}`)= item.title
+            td= item.description

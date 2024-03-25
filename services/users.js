@@ -15,17 +15,17 @@ class Author extends Model {
   }
 
   static get relationMappings() {
-    const { Video } = require('./posts_sqlite');
+    const { Post } = require('./posts');
     return {
-      videos: {
-        relation: Model.HasManyRelation, //! one author has many videos
-        modelClass: Video,
+      posts: {
+        relation: Model.HasManyRelation, //! one author has many posts
+        modelClass: Post,
         join: {
           from: 'authors.id',
-          to: 'videos.author_id',
-        },
-      },
-    };
+          to: 'posts.author_id'
+        }
+      }
+    }
   }
 }
 
@@ -34,12 +34,10 @@ function findAdmin(login) {
 }
 
 async function addNewAuthor({ login, password }) {
-  return (
-    await Author.query().insertAndFetch({
-      name: login,
-      password,
-    })
-  ).toJSON();
+  return (await Author.query().insertAndFetch({
+    name: login,
+    password
+  })).toJSON();
 }
 
 function findAuthor(login) {
@@ -56,5 +54,5 @@ module.exports = {
   findAdmin,
   addNewAuthor,
   findAuthor,
-  getAuthorsList,
-};
+  getAuthorsList
+}

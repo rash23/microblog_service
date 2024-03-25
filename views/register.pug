@@ -1,0 +1,16 @@
+extends layout
+
+block scripts
+  script(type="module", src="/public/auth.js")
+
+block content
+  h3 Post author account registration
+  form(method="POST")
+    div.group
+      label(for="login") Username
+      input(type="text", name="login", placeholer="Name" required)
+    div.group
+      label(for="password") Password
+      input(type="password", name="password" required)
+    div#error=locals.error
+    button(type="submit") Register

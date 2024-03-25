@@ -12,7 +12,7 @@ class Post extends Model {
   static get relationMappings() {
     return {
       author: {
-        relation: Model.BelongsToOneRelation, //! one video belongs to one author
+        relation: Model.BelongsToOneRelation,
         modelClass: Author,
         join: {
           from: 'posts.author_id',
@@ -39,12 +39,12 @@ function getPostsList({ authorId, withAuthors = false } = {}) {
 }
 
 function getPostById(id) {
-  // SELECT * FROM videos WHERE id = X
+  // SELECT * FROM posts WHERE id = X
   return Post.query().findById(id).withGraphFetched('author');
 }
 
 async function addPost(metaData) {
-  // INSERT INTO videos (title, description) VALUES (metaData.title, metsData.description)
+  // INSERT INTO posts (title, description) VALUES (metaData.title, metsData.description)
   return (await Post.query().insertAndFetch(metaData)).toJSON();
 }
 
@@ -53,7 +53,7 @@ async function addPost(metaData) {
  * @returns {Promise<Number|undefined>}
  */
 async function deletePostById(id) {
-  // DELETE FROM videos WHERE id = X
+  // DELETE FROM posts WHERE id = X
   return (await Post.query().deleteById(id)) || undefined;
 }
 

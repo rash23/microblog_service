@@ -1,0 +1,29 @@
+extends layout
+
+block headerButtons
+  a(href="/auth/logout") Logout
+
+block scripts
+  script(type="module", src="/public/api.js")
+
+block content
+  h3 This is your video collection
+  div#root
+    table.mainTable
+      thead
+        tr
+          each item in ['ID', 'Movie', 'Description', 'Actions']
+            th(class=item.toLowerCase())= item
+      tbody#postsTable
+        each item in locals.posts
+          tr
+            td= item.id
+            td
+              a(href=`/posts/${item.id}`)= item.title
+            td= item.description
+            td
+              input(type="button", value="Manage")
+              input(type="button", value="Delete" data-id=item.id data-action='del-video')
+  .padded
+    a(href="/addPost") Add new video
+

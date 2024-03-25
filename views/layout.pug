@@ -1,0 +1,14 @@
+html
+  head
+    title Poststorage
+    link(rel="stylesheet" href="/public/styles.css")
+    link(href="/public/favicon.ico" rel="icon" type="image/x-icon")
+    //- any block is optional, just a place to put something IF needed
+    block scripts
+  body
+    #navbar
+      a(href="/") Home
+      //- buttons/links specific for a page
+      block headerButtons
+
+    block content

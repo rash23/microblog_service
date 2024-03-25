@@ -16,38 +16,38 @@ class PostController {
   };
 
   /**
-   * Injects a video service of required datastorage type
+   * Injects a post service of required datastorage type
    *
-   * @param {PostService} videoService
+   * @param {PostService} postService
    */
-  constructor(videoService) {
-    this.videoService = videoService;
+  constructor(postService) {
+    this.postService = postService;
   }
 
   getPostsList(req, resp, next) {
-    // use videoService to get data
+    // use postService to get data
     this.#handle('getPostsList', req, resp, next);
   }
 
   getPostById(req, resp, next) {
-    const { videoId } = req.params;
+    const { postId } = req.params;
 
-    // use videoService to get data
-    this.#handle('getPostById', req, resp, next, videoId);
+    // use postService to get data
+    this.#handle('getPostById', req, resp, next, postId);
   }
 
   addPost(req, resp, next) {
     const { body: metaData } = req;
 
-    // use videoService to add new data
+    // use postService to add new data
     this.#handle('addPost', req, resp, next, metaData);
   }
 
   deletePostById(req, resp, next) {
-    const { videoId } = req.params;
+    const { postId } = req.params;
 
-    // use videoService to delete some data
-    this.#handle('deletePostById', req, resp, next, videoId);
+    // use postService to delete some data
+    this.#handle('deletePostById', req, resp, next, postId);
   }
 
   /**
@@ -61,7 +61,7 @@ class PostController {
    */
   async #handle(methodName, req, resp, next, ...args) {
     try {
-      const result = await this.videoService[methodName](...args);
+      const result = await this.postService[methodName](...args);
       const respStatus = result ? PostController.#successStatus[req.method] : 404;
 
       resp.status(respStatus).json(result);
