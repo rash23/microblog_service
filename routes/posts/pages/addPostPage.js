@@ -8,7 +8,7 @@ router.get('/', checkUser, async (req, res) => {
     const { token } = req.cookies;
     const user = verifyJwt(token);
 
-    res.render('addPost', { user, DB_HOST: process.env.DB_HOST });
+    res.render('addPost', { user });
   } catch (err) {
     next(err);
   }
