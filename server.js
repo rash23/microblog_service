@@ -1,7 +1,6 @@
 require('dotenv').config();
 require('module-alias/register');
 const express = require('express');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const fs = require('fs');
@@ -49,9 +48,6 @@ app.use('/public', express.static('static'));
 // Set the view engine to Pug
 app.set('view engine', 'pug');
 app.set('views', 'views');
-
-// Middleware for enabling CORS
-app.use(cors({ origin: process.env.DB_HOST }));
 
 // Middleware for parsing JSON request bodies
 const jsonBodyParser = express.json();
