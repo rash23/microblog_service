@@ -8,7 +8,7 @@ const Post = mongoose.model('posts', postsSchema);
 const Comment = mongoose.model('comments', commentsSchema);
 const Admin = mongoose.model('admins', adminSchema);
 
-const mongoUrl = `mongodb+srv://${dbConfig.user}:${dbConfig.pass}@{dbConfig.host}/?retryWrites=true&w=majority&appName=${dbConfig.dbName}`;
+const mongoUrl = `mongodb+srv://${dbConfig.user}:${dbConfig.pass}@${dbConfig.host}/?retryWrites=true&w=majority&appName=${dbConfig.dbName}`;
 const run = async () => {
   try {
     await mongoose.connect(mongoUrl, { dbName: dbConfig.dbName });

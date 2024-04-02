@@ -17,7 +17,6 @@ const { router: routerAuth } = require('@routes/auth/auth');
 
 const { router: routeMain } = require('@routes/common/main');
 const { router: routePostUser } = require('@routes/posts/pages/userPostPage');
-const { router: routePostUser } = require('./routes/posts/pages/userPostPage');
 const { router: routeRegister } = require('@routes/auth/pages/registerPage');
 const { router: routeLogIn } = require('@routes/auth/pages/logInPage');
 const { router: routeMyPosts } = require('@routes/posts/pages/myPostsPage');
