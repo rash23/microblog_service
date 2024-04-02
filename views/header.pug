@@ -1,0 +1,24 @@
+header.header
+    nav.navigation
+        ul.nav
+            if user.role == "admin"
+                li 
+                    a(class='button' href='/admin') Home
+            else 
+                li 
+                    a(class='button' href='/') Home           
+            if user.role === "user"
+                li
+                    a(class='button' href=`/my-posts/${user.id}`) My posts
+                li
+                    a(class='button' href=`/add-posts/`) New post
+        ul.authentication
+            if user.role
+                li 
+                    a(class='button' href='/logout') Sign out
+            else 
+                li
+                    a(class='button' href='/login') Sign in
+                li 
+                    a(class='button' href='/register') Registration
+

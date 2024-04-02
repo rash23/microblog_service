@@ -1,20 +1,23 @@
 {
-  "name": "microblog_service",
+  "name": "Microblog",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "debug": "node --inspect-brk server.js"
+    "debug": "node --inspect-brk server.js",
+    "prettier": "prettier ./ --write"
   },
   "author": "Horodetskyi Vitalii",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "winston": "^3.13.0"
   },
   "dependencies": {
-    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "config": "^3.3.11",
     "connect-mongodb-session": "^5.0.0",
@@ -24,11 +27,21 @@
     "express": "^4.19.1",
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.2",
-    "morgan": "^1.10.0",
     "pug": "^3.0.2",
     "session": "^0.1.0",
     "yup": "^1.4.0"
+  },
+  "_moduleAliases": {
+    "@routes": "./routes",
+    "@helpers": "./helpers",
+    "@services": "./services",
+    "@db": "./db",
+    "@pages": "./pages",
+    "@middleware": "./middleware",
+    "@static": "./static",
+    "@utils": "./utils"
   }
 }
