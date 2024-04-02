@@ -1,5 +1,8 @@
 require('dotenv').config();
 require('module-alias/register');
+
+const { server: srvConfig } = require('config');
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
@@ -14,15 +17,13 @@ const { router: routerAuth } = require('@routes/auth/auth');
 
 const { router: routeMain } = require('@routes/common/main');
 const { router: routePostUser } = require('@routes/posts/pages/userPostPage');
+const { router: routePostUser } = require('./routes/posts/pages/userPostPage');
 const { router: routeRegister } = require('@routes/auth/pages/registerPage');
 const { router: routeLogIn } = require('@routes/auth/pages/logInPage');
 const { router: routeMyPosts } = require('@routes/posts/pages/myPostsPage');
 const { router: routeLogout } = require('@routes/auth/pages/logOutPage');
 const { router: routeAddPost } = require('@routes/posts/pages/addPostPage');
 const { router: routeAdmin } = require('@routes/common/admin');
-
-// Define port
-const PORT = process.env.PORT || 3000;
 
 // Define directory for storing logs
 const LOGS_DIRECTORY = path.join(__dirname, 'logs');
@@ -73,4 +74,4 @@ app.use('/add-posts', routeAddPost);
 app.use('/admin', routeAdmin);
 
 // Start the server
-app.listen(PORT, () => logger.info(`Server is listening on port ${PORT}`));
+app.listen(srvConfig.port, () => logger.info(`Server is listening on port ${srvConfig.port}`));

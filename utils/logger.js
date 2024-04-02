@@ -1,5 +1,7 @@
+const config = require('config');
 const winston = require('winston');
 const path = require('path');
+
 const LOGS_DIRECTORY = path.join('.', 'logs');
 
 // Initialize Winston logger
@@ -12,7 +14,7 @@ const logger = winston.createLogger({
   ],
 });
 
-if (process.env.NODE_ENV !== 'production') {
+if (!config.isProduction) {
   logger.add(
     new winston.transports.Console({
       format: winston.format.simple(),
