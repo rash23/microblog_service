@@ -336,3 +336,61 @@ body {
 #add-comment .btn:hover {
   background-color: #0056b3;
 }
+
+/* Table styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.head-table,
+.list-users {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.head-table div,
+.list-users div {
+  flex: 1;
+  padding: 10px;
+}
+
+.head-table div {
+  font-weight: bold;
+}
+
+/* User styles */
+.user {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0;
+}
+
+.user div {
+  flex: 1;
+  padding: 10px;
+}
+
+/* Button styles */
+.box-btn {
+  display: flex;
+  align-items: center;
+}
+
+.delete {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete:hover {
+  background-color: #c82333;
+}
