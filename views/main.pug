@@ -2,10 +2,13 @@ extends head
 block content       
     section.main.container
         div.posts__box
-            each item in posts
-                a(href=`/user-post/${item._id}`)
-                    div.post
-                        h3= item.title
-                        h4= item.user_id.username
-                        div.button-wrapper
-                            button.post__read-btn Read
+            if posts.length === 0
+                p You have not created any posts yet
+            else
+                each item in posts
+                    a(href=`/user-post/${item._id}`)
+                        div.post
+                            h3= item.title
+                            h4= item.user_id.username
+                            div.button-wrapper
+                                button.post__read-btn Read

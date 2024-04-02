@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 async function hashPassword(plainTextPass) {
   const salt = await bcrypt.genSalt(10);
   const hashedPass = await bcrypt.hash(plainTextPass, salt);
+
   return hashedPass;
 }
 
