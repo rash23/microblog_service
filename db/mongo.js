@@ -6,7 +6,6 @@ const { userSchema, postsSchema, commentsSchema, adminSchema } = require('./sche
 const User = mongoose.model('users', userSchema);
 const Post = mongoose.model('posts', postsSchema);
 const Comment = mongoose.model('comments', commentsSchema);
-const Admin = mongoose.model('admins', adminSchema);
 
 const mongoUrl = `mongodb+srv://${dbConfig.user}:${dbConfig.pass}@${dbConfig.host}/?retryWrites=true&w=majority&appName=${dbConfig.dbName}`;
 const run = async () => {
@@ -25,5 +24,4 @@ module.exports = {
   User,
   Post,
   Comment,
-  Admin,
 };

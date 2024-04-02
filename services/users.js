@@ -3,6 +3,32 @@ const { HTTP_STATUS_CODES } = require('@utils/constants');
 const { hashPassword, checkPassword, issueJwt } = require('@helpers/auth');
 const { logger } = require('@utils/logger');
 
+async function authenticateUser(req, res, next, email, password) {
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      logger.warn('User not found');
+      res.status(HTTP_STATUS_CODES.UNAUTHORIZED_401).send('User not found');
+      return;
+    }
+
+    const passwordMatch = await checkPassword(password, user.password);
+    if (!passwordMatch) {
+      logger.warn('Incorrect password for user');
+      res.status(HTTP_STATUS_CODES.UNAUTHORIZED_401).send('Incorrect password');
+      return;
+    }
+
+    const token = issueJwt({ id: user.id, role: 'user' });
+    res.cookie('token', token, { httpOnly: true });
+    logger.info(`User with email ${email} authenticated successfully`);
+    next();
+  } catch (err) {
+    logger.error(`Error authenticating user: ${err.message}`);
+    next(err);
+  }
+}
+
 async function getAllUsers(req, res, next) {
   try {
     req.users = await User.find();
@@ -21,7 +47,8 @@ async function createUser(req, res, next) {
   try {
     req.users = await User.create({ password: hash, email, username });
     logger.info('User created successfully');
-    next();
+
+    await authenticateUser(req, res, next, email, password);
   } catch (err) {
     logger.error(`Error creating user: ${err.message}`);
     next(err);
@@ -46,19 +73,7 @@ async function deleteUser(req, res, next) {
 async function findUser(req, res, next) {
   const { password, email } = req.body;
   try {
-    const user = await User.findOne({ email });
-    const passwordMatch = await checkPassword(password, user.password);
-
-    if (!passwordMatch) {
-      logger.warn('Incorrect password for user');
-      res.status(HTTP_STATUS_CODES.UNAUTHORIZED_401).send('Error password');
-      return;
-    }
-
-    const token = issueJwt({ id: user.id, role: 'user' });
-    res.cookie('token', token, { httpOnly: true });
-    logger.info(`User with email ${email} authenticated successfully`);
-    next();
+    await authenticateUser(req, res, next, email, password);
   } catch (err) {
     req.status = HTTP_STATUS_CODES.NOT_FOUND_404;
     logger.error(`Error finding user: ${err.message}`);

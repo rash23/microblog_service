@@ -1,12 +1,10 @@
-const { verifyJwt } = require('@helpers/auth');
-const { checkAdmin } = require('@helpers/checkAdmin');
+const { protectedRoute } = require('@middleware/auth');
 const { getAllUsers } = require('@services/users');
 
 const router = require('express').Router();
 
-router.get('/', checkAdmin, getAllUsers, async (req, res) => {
-  const { token } = req.cookies;
-  const user = verifyJwt(token);
+router.get('/', protectedRoute(['admin'], '/'), getAllUsers, async (req, res) => {
+  const user = req._auth;
   const users = req.users;
 
   try {

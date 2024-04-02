@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
 const { logger } = require('@utils/logger');
+const { jwtParser } = require('@middleware/auth');
 
 const { router: routerUser } = require('@routes/users/users');
 const { router: routesPosts } = require('@routes/posts/posts');
@@ -55,6 +56,7 @@ app.use(jsonBodyParser);
 
 // Middleware for parsing URL-encoded request bodies
 app.use(cookieParser());
+app.use(jwtParser);
 
 // Main routes
 app.use('/auth', routerAuth);
