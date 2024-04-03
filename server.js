@@ -1,12 +1,15 @@
 require('dotenv').config();
 require('module-alias/register');
+
+const { server: srvConfig } = require('config');
+
 const express = require('express');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const fs = require('fs');
 const path = require('path');
 const { logger } = require('@utils/logger');
+const { jwtParser } = require('@middleware/auth');
 
 const { router: routerUser } = require('@routes/users/users');
 const { router: routesPosts } = require('@routes/posts/posts');
@@ -21,9 +24,6 @@ const { router: routeMyPosts } = require('@routes/posts/pages/myPostsPage');
 const { router: routeLogout } = require('@routes/auth/pages/logOutPage');
 const { router: routeAddPost } = require('@routes/posts/pages/addPostPage');
 const { router: routeAdmin } = require('@routes/common/admin');
-
-// Define port
-const PORT = process.env.PORT || 3000;
 
 // Define directory for storing logs
 const LOGS_DIRECTORY = path.join(__dirname, 'logs');
@@ -50,15 +50,13 @@ app.use('/public', express.static('static'));
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
-// Middleware for enabling CORS
-app.use(cors({ origin: process.env.DB_HOST }));
-
 // Middleware for parsing JSON request bodies
 const jsonBodyParser = express.json();
 app.use(jsonBodyParser);
 
 // Middleware for parsing URL-encoded request bodies
 app.use(cookieParser());
+app.use(jwtParser);
 
 // Main routes
 app.use('/auth', routerAuth);
@@ -77,4 +75,4 @@ app.use('/add-posts', routeAddPost);
 app.use('/admin', routeAdmin);
 
 // Start the server
-app.listen(PORT, () => logger.info(`Server is listening on port ${PORT}`));
+app.listen(srvConfig.port, () => logger.info(`Server is listening on port ${srvConfig.port}`));

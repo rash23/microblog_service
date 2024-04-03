@@ -1,6 +1,5 @@
 const { Comment } = require('@db/mongo');
 const { ObjectId } = require('mongodb');
-const { verifyJwt } = require('@helpers/auth');
 const { HTTP_STATUS_CODES } = require('@utils/constants');
 const { logger } = require('@utils/logger');
 
@@ -17,8 +16,8 @@ async function getCommentsById(req, res, next) {
 }
 
 async function createComment(req, res, next) {
-  const { token } = req.cookies;
-  const { id: user_id } = verifyJwt(token);
+  const user = req._auth;
+  const { id: user_id } = user;
   const { comment, post_id } = req.body;
   try {
     await Comment.create({

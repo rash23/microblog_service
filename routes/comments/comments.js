@@ -1,14 +1,13 @@
 const express = require('express');
 router = express.Router();
-
+const { protectedRoute } = require('@middleware/auth');
 const { createComment } = require('@services/comments');
-const { checkUser } = require('@helpers/checkUser');
 const { routerError } = require('@services/error');
 const { validateCommentData } = require('@middleware/validation');
 
 router.post(
   '/add-comment',
-  checkUser,
+  protectedRoute(['user', 'admin']),
   express.urlencoded({ extended: true }),
   validateCommentData,
   createComment,

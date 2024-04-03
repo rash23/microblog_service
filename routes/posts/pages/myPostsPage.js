@@ -1,12 +1,10 @@
 const router = require('express').Router();
-const { verifyJwt } = require('@helpers/auth');
-const { checkUser } = require('@helpers/checkUser');
+const { protectedRoute } = require('@middleware/auth');
 const { getUserPosts } = require('@services/posts');
 
-router.get('/:id', checkUser, getUserPosts, async (req, res) => {
+router.get('/:id', protectedRoute(['user', 'admin']), getUserPosts, async (req, res, next) => {
   const posts = req.posts;
-  const { token } = req.cookies;
-  const user = verifyJwt(token);
+  const user = req._auth;
 
   try {
     res.render('my_posts', { posts, user });
@@ -14,7 +12,6 @@ router.get('/:id', checkUser, getUserPosts, async (req, res) => {
     next(err);
   }
 });
-
 module.exports = {
   router,
 };

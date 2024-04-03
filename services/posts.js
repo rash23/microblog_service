@@ -1,6 +1,5 @@
 const { Post, Comment } = require('@db/mongo');
 const { ObjectId } = require('mongodb');
-const { verifyJwt } = require('@helpers/auth');
 const { HTTP_STATUS_CODES } = require('@utils/constants');
 const { logger } = require('@utils/logger');
 
@@ -46,8 +45,8 @@ async function getPostById(req, res, next) {
 }
 
 async function createPost(req, res, next) {
-  const { token } = req.cookies;
-  const { id: user_id } = verifyJwt(token);
+  const user = req._auth;
+  const { id: user_id } = user;
   const { title, description } = req.body;
 
   try {

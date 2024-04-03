@@ -1,14 +1,12 @@
-const { verifyJwt } = require('@helpers/auth');
-const { checkUser } = require('@helpers/checkUser');
+const { protectedRoute } = require('@middleware/auth');
 
 const router = require('express').Router();
 
-router.get('/', checkUser, async (req, res) => {
+router.get('/', protectedRoute(['user', 'admin']), async (req, res) => {
   try {
-    const { token } = req.cookies;
-    const user = verifyJwt(token);
+    const user = req._auth;
 
-    res.render('addPost', { user, DB_HOST: process.env.DB_HOST });
+    res.render('addPost', { user });
   } catch (err) {
     next(err);
   }
